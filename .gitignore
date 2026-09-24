@@ -1,0 +1,11 @@
+.DS_Store
+__pycache__/
+*.pyc
+.codex/
+.claude/
+.agents/
+node_modules/
+demo-recording/
+releases/校验摘要.md
+releases/pulse-practice-xhs-tool-hitsound.zip
+branding/pulse-logo-1024.png
