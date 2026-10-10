@@ -4,7 +4,7 @@ ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'xhs-dist'
 OUT.mkdir(exist_ok=True)
 (ROOT/'releases').mkdir(exist_ok=True)
-html=(ROOT/'index.html').read_text()
+html=(ROOT/'scripts'/'xhs-source.html').read_text()
 js=re.search(r'<script>([\s\S]*?)</script>',html).group(1)
 css=re.search(r'<style>([\s\S]*?)</style>',html).group(1)
 html=re.sub(r'<script>[\s\S]*?</script>','<script src="./app.js"></script>',html)

@@ -4,7 +4,7 @@
 
 # PULSE · 四键节奏练习器
 
-一个为手机竖屏设计的 4K 下落式音游练习器。自由设置 BPM、节奏、键型、下落速度和练习长度，把注意力放在节奏与手感上。
+一个支持 iPad 横屏和手机竖屏的 4K 下落式音游练习器。自由设置 BPM、节奏、键型、下落速度和练习长度，把注意力放在节奏与手感上。
 
 **[在线体验](https://xiaochunlilywang.github.io/pulse-practice/)** · **[小红书上传包](releases/pulse-practice-xhs-tool.zip)** · **[模拟演示视频](releases/PULSE-120BPM-6.5-十六分随机-100模拟.mp4)**
 
@@ -23,7 +23,7 @@
 ## 如何练习
 
 1. 设置 BPM、节奏型、键型、速度和小节数。
-2. 点击“开始练习”，跟随四拍倒数准备。
+2. 网页版点击“开始练习”，选择 iPad 横屏（4:3）或手机竖屏（9:16），进入独立练习页。点击“开始倒数”，跟随四拍提示准备。小红书版保持原有竖屏流程。
 3. 音符到达底部判定线时，点击对应轨道。
 4. 结束后查看成绩，直接重练或调整参数。
 
@@ -83,7 +83,10 @@ node scripts/test_hitsound.cjs
 ## 项目结构
 
 ```text
-index.html                  网页版完整源码与入口
+index.html                  网页版设置与模式选择
+play.html                   独立练习页面
+web.js / web.css             网页版共享逻辑与样式
+scripts/xhs-source.html      独立保存的小红书原始源码
 branding/                   标志图片与源页面
 scripts/build_xhs.py         小红书适配和打包
 scripts/check_xhs.py         结构、资源及兼容性静态检查
@@ -92,7 +95,7 @@ xhs-dist/                   小红书离线版本
 releases/                   上传 ZIP 和模拟演示视频
 ```
 
-网页版修改后运行构建及校验命令，可同步更新小红书产物。GitHub Pages 直接使用主分支根目录的网页入口。
+网页版与小红书版独立维护；打包脚本只读取 `scripts/xhs-source.html`，网页版调整不会带入小红书产物。GitHub Pages 直接使用主分支根目录的网页入口。
 
 ## 当前边界
 
