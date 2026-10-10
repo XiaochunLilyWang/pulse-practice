@@ -45,10 +45,21 @@ const PulseHistory = (() => {
     return record;
   }
 
+  // Derive awards from judgments so existing history gets badges too.
+  // AP is exclusive of FC, and rounded ACC never determines an award.
+  function achievement(result) {
+    const {perfect, great, lost} = result;
+    if (![perfect, great, lost].every(n => Number.isInteger(n) && n >= 0)) return null;
+    const total = perfect + great + lost;
+    if (!total || lost || (result.notes && total !== result.notes.length)) return null;
+    return great === 0 ? 'ap' : 'fc';
+  }
   function summarize(records) {
     const hits = records.reduce((sum, r) => sum + r.hits, 0);
     return {
       count: records.length,
+      fc: records.filter(r => achievement(r) === 'fc').length,
+      ap: records.filter(r => achievement(r) === 'ap').length,
       acc: records.length ? records.reduce((sum, r) => sum + r.acc, 0) / records.length : null,
       offset: hits ? records.reduce((sum, r) => sum + r.offsetSum, 0) / hits : null
     };
@@ -71,6 +82,7 @@ const PulseHistory = (() => {
     const records = read(), summary = summarize(records);
     root.innerHTML = `<div class="history-heading"><div><div class="eyebrow">YOUR PRACTICE LOG</div><h2>历史战绩</h2></div><span>共 ${summary.count} 次完成练习</span></div>
       <div class="history-summary"><div><small>平均 ACC</small><strong>${summary.acc === null ? '—' : summary.acc.toFixed(1)+'%'}</strong></div><div><small>平均时间偏差</small><strong>${timing(summary.offset)}</strong></div></div>
+      <div class="history-awards"><span class="history-award fc">FC 全连 <strong>${summary.fc}</strong> 次</span><span class="history-award ap">AP 全 PERFECT <strong>${summary.ap}</strong> 次</span></div>
       ${root.hasAttribute('data-history-compact') ? '' : '<p class="history-note">ACC 按每局平均；时间偏差按所有命中音符平均，偏早为负、偏晚为正，可相互抵消，漏击不计入。仅保存在当前浏览器，清除站点数据后消失。</p>'}
       ${warning ? `<p class="history-warning" role="status">${escape(warning)}</p>` : ''}
       ${records.length ? '<ol class="history-list"></ol><button type="button" class="history-more">查看更多战绩</button>' : '<p class="history-empty">还没有战绩。完成一次练习后，会自动记录在这里。</p>'}`;
@@ -79,7 +91,7 @@ const PulseHistory = (() => {
     let shown = 0;
     function append() {
       const next = records.slice(shown, shown + 10);
-      list.insertAdjacentHTML('beforeend', next.map(r => `<li><div class="history-row"><time>${escape(new Date(r.at).toLocaleString('zh-CN', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'}))}</time><strong>${r.acc.toFixed(1)}% ACC</strong></div><div class="history-row history-secondary"><span>${timing(r.hits ? r.offsetSum/r.hits : null)}${r.hits ? '' : '（无命中）'}</span><span>最大连击 ${escape(r.max ?? '—')}</span></div><p>${escape(description(r))}</p><p>PERFECT ${escape(r.perfect ?? '—')} · GREAT ${escape(r.great ?? '—')} · LOST ${escape(r.lost ?? '—')}</p></li>`).join(''));
+      list.insertAdjacentHTML('beforeend', next.map(r => `<li><div class="history-row"><time>${escape(new Date(r.at).toLocaleString('zh-CN', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'}))}</time><strong>${achievement(r) ? `<span class="history-badge ${achievement(r)}">${achievement(r).toUpperCase()}</span> ` : ''}${r.acc.toFixed(1)}% ACC</strong></div><div class="history-row history-secondary"><span>${timing(r.hits ? r.offsetSum/r.hits : null)}${r.hits ? '' : '（无命中）'}</span><span>最大连击 ${escape(r.max ?? '—')}</span></div><p>${escape(description(r))}</p><p>PERFECT ${escape(r.perfect ?? '—')} · GREAT ${escape(r.great ?? '—')} · LOST ${escape(r.lost ?? '—')}</p></li>`).join(''));
       shown += next.length;
       more.hidden = shown >= records.length;
       more.textContent = `查看更多战绩（还有 ${records.length - shown} 次）`;
@@ -90,5 +102,5 @@ const PulseHistory = (() => {
   function refresh() { document.querySelectorAll('[data-history]').forEach(render); }
   window.addEventListener('pageshow', refresh);
   window.addEventListener('storage', e => { if (e.key === KEY || e.key === null) refresh(); });
-  return {save, read, summarize, timing, render};
+  return {save, read, summarize, timing, render, achievement};
 })();
