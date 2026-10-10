@@ -33,9 +33,9 @@ assert.equal(history.read().length,0);
 // Completion is the sole persistence point; repeated finish calls cannot duplicate a run.
 const web=fs.readFileSync(path.join(__dirname,'../web.js'),'utf8');
 const finish=web.slice(web.indexOf('function finish(){'),web.indexOf("\nif(!isPlayPage){",web.indexOf('function finish(){')));
-let saves=0;const element={innerHTML:'',querySelector(){return {}}};
+let saves=0;const element={scrollTop:250,innerHTML:'',querySelector(){return {}}};
 const ctx=vm.createContext({mode:'playing',run:{...result(1,1,[0]),max:1},config:settings,document:{body:{dataset:{layout:'landscape'}}},patterns:[{id:'random',name:'随机'}],PulseHistory:{save(){saves++},render(){},achievement:history.achievement},PulseCelebration:{badge(){return ''},play(){},clear(){}},$:()=>element,start(){},back(){}});
-vm.runInContext(finish+';finish();finish();',ctx);assert.equal(saves,1);
+vm.runInContext(finish+';finish();finish();',ctx);assert.equal(saves,1);assert.equal(element.scrollTop,0);
 console.log('PASS: averages, signed timing, misses, persistence, unlimited records, quota recovery, malformed data, and duplicate completion guard.');
 
 assert.equal(history.achievement({perfect:16,great:0,lost:0}),'ap');

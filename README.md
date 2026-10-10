@@ -97,7 +97,7 @@ xhs-dist/                   小红书离线版本
 releases/                   上传 ZIP 和模拟演示视频
 ```
 
-网页版与小红书版独立维护；打包脚本只读取 `scripts/xhs-source.html`，网页版调整不会带入小红书产物。GitHub Pages 直接使用主分支根目录的网页入口。
+网页版与小红书版独立维护；打包脚本只读取 `scripts/xhs-source.html`，网页版调整不会带入小红书产物。GitHub Pages 直接使用主分支根目录的网页入口。修改网页版资源后，发布前运行 `python3 scripts/version_web.py` 更新资源版本标记，避免浏览器继续使用旧缓存。
 
 ## 当前边界
 
