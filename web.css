@@ -22,3 +22,12 @@
 .play-page #rotateHint{color:var(--lime)}
 @container (max-height: 480px){.gamebar{padding:6px 12px!important}.gamebar .brand{font-size:18px!important}.stats{padding:6px 0!important}.stats div{font-size:16px}.overlay h2{font-size:22px;margin:8px 0}.overlay p{font-size:11px;margin:8px 0}.overlay .score{font-size:40px}.overlay button{padding:9px;margin-top:8px}.judgment{font-size:20px}}
 @media(max-width:420px){.play-navigation{padding:0 10px;font-size:10px}.play-navigation #rotateHint{max-width:105px;text-align:right}}
+
+/* Shared local practice history on settings and results pages. */
+.history-panel{margin-top:28px;border:1px solid var(--line);border-radius:14px;padding:20px;background:var(--card);text-align:left;min-width:0}
+.history-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}.history-heading h2{font-size:19px;margin:8px 0 0}.history-heading>span{color:var(--muted);font-size:11px}
+.history-summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0 12px}.history-summary small{display:block;font-size:11px;color:var(--muted);margin-bottom:8px}.history-summary strong{font-size:21px;color:var(--lime);font-variant-numeric:tabular-nums}
+.history-panel .history-note,.history-panel .history-empty{font-size:11px;color:var(--muted);line-height:1.8;margin:10px 0}.history-panel .history-warning{font-size:12px;color:#ffcb83;line-height:1.6}
+.history-list{padding:0;margin:16px 0 0;list-style:none}.history-list li{border-top:1px solid var(--line);padding:14px 0}.history-row{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:12px}.history-row time{color:var(--muted);font-size:11px}.history-row strong{color:var(--lime)}.history-secondary{margin-top:8px;color:#c1cbb5;font-size:11px}.history-list li p{font-size:10px;line-height:1.7;color:var(--muted);margin:6px 0 0;overflow-wrap:anywhere}
+.history-panel .history-more{display:block;width:100%;padding:12px;background:#293122;color:var(--text);border:1px solid var(--line);border-radius:8px;font-size:12px;margin-top:8px}.history-more[hidden]{display:none}
+.play-page .overlay:has([data-history]){align-items:flex-start}.play-page .overlayContent:has([data-history]){max-width:540px}.play-page .history-panel{padding:16px}.play-page .history-heading h2{font-size:18px}.play-page .history-summary strong{font-size:18px}
