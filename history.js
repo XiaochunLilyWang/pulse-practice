@@ -71,7 +71,7 @@ const PulseHistory = (() => {
     const records = read(), summary = summarize(records);
     root.innerHTML = `<div class="history-heading"><div><div class="eyebrow">YOUR PRACTICE LOG</div><h2>历史战绩</h2></div><span>共 ${summary.count} 次完成练习</span></div>
       <div class="history-summary"><div><small>平均 ACC</small><strong>${summary.acc === null ? '—' : summary.acc.toFixed(1)+'%'}</strong></div><div><small>平均时间偏差</small><strong>${timing(summary.offset)}</strong></div></div>
-      <p class="history-note">ACC 按每局平均；时间偏差按所有命中音符平均，偏早为负、偏晚为正，可相互抵消，漏击不计入。仅保存在当前浏览器，清除站点数据后消失。</p>
+      ${root.hasAttribute('data-history-compact') ? '' : '<p class="history-note">ACC 按每局平均；时间偏差按所有命中音符平均，偏早为负、偏晚为正，可相互抵消，漏击不计入。仅保存在当前浏览器，清除站点数据后消失。</p>'}
       ${warning ? `<p class="history-warning" role="status">${escape(warning)}</p>` : ''}
       ${records.length ? '<ol class="history-list"></ol><button type="button" class="history-more">查看更多战绩</button>' : '<p class="history-empty">还没有战绩。完成一次练习后，会自动记录在这里。</p>'}`;
     if (!records.length) return;
