@@ -42,3 +42,21 @@
 @keyframes celebration-glow{0%{opacity:0}20%{opacity:1}100%{opacity:0}}
 @media(prefers-reduced-motion:reduce){.celebration{display:none}.confetti,.celebration-halo{animation:none}}
 @container(max-width:280px){.achievement-badge{font-size:22px;padding:8px 12px;gap:6px}.achievement-badge small{font-size:8px}}
+
+/* Pattern controls and impact preferences. */
+.patterns{grid-template-columns:repeat(5,minmax(0,1fr))}#stairsDirections{grid-template-columns:repeat(3,1fr)}
+.feedback-settings{border-top:1px solid var(--line);padding-top:16px;margin-bottom:20px;font-size:12px;color:var(--muted)}
+.feedback-settings select{float:right;background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:6px;padding:6px;font:inherit}
+.feedback-settings small{display:block;font-size:10px;margin-top:6px}.feedback-settings .toggle-row{clear:both;padding-top:12px}
+.display-options{grid-template-columns:repeat(3,minmax(0,1fr))}.device-shape.wide-phone{width:72px;height:40.5px;margin-top:7.5px}
+.rotation-gate{position:fixed;inset:48px 0 0;z-index:50;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
+.rotation-gate[hidden]{display:none}.rotation-gate h2{font-size:24px}.rotation-gate p{color:var(--muted);font-size:13px;line-height:1.9}.rotation-gate a{color:var(--lime);padding:14px}
+@media(max-width:540px){.display-picker{padding:22px}.display-options{grid-template-columns:1fr}.display-option{display:grid;grid-template-columns:90px 1fr;text-align:left;align-items:center;padding:12px}.display-option .device-shape{grid-row:span 2;margin:0 auto}.display-option small{margin-top:4px}.display-option .phone{height:40px;width:23px}.display-option .tablet{width:54px;height:40px}}
+@media(orientation:landscape) and (max-height:540px){
+.play-page[data-layout="mobile-landscape"] .play-navigation{height:30px;font-size:10px}
+.play-page[data-layout="mobile-landscape"] .gamebar{padding:4px 12px!important}
+.play-page[data-layout="mobile-landscape"] .gamebar button{padding:5px 12px}
+.play-page[data-layout="mobile-landscape"] .stats{padding:4px 0!important}
+.play-page[data-layout="mobile-landscape"] .stats div{font-size:15px}
+.play-page[data-layout="mobile-landscape"] .stats small{font-size:8px;margin-bottom:2px}
+}

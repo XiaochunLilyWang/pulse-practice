@@ -73,9 +73,9 @@ const PulseHistory = (() => {
   function description(r) {
     const s = r.settings;
     const rhythm = {1:'四分',2:'八分',3:'三连音',4:'十六分',custom:'自定义'}[s.sub] || '节奏';
-    const pattern = {jack:'纵连',trill:'交互',stairs:'楼梯',random:'随机'}[s.pattern] || '键型';
+    const pattern = {jack:'纵连',trill:'交互',stairs:'楼梯',double:'双押',random:'随机'}[s.pattern] || '键型';
     const laneMode = s.pattern === 'jack' || s.pattern === 'trill' ? (s[s.pattern+'Mode'] === 'fixed' ? ' · 固定轨道' : ' · 每小节换轨') : '';
-    return `${s.bpm} BPM · ${rhythm} · ${pattern}${laneMode} · 速度 ${s.speed} · ${s.bars} 小节 · ${r.layout === 'landscape' ? '横屏' : '竖屏'}`;
+    return `${s.bpm} BPM · ${rhythm} · ${pattern}${s.pattern==='stairs'?' · '+({left:'向左',right:'向右',bounce:'往返'}[s.stairsDirection]||'向右'):''}${laneMode} · 速度 ${s.speed} · ${s.bars} 小节 · ${r.layout === 'mobile-landscape' ? '手机横屏 16:9' : r.layout === 'landscape' ? 'iPad 横屏 4:3' : '竖屏'}`;
   }
   function render(root) {
     if (!root) return;
