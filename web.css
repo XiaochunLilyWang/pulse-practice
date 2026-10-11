@@ -60,3 +60,9 @@
 .play-page[data-layout="mobile-landscape"] .stats div{font-size:15px}
 .play-page[data-layout="mobile-landscape"] .stats small{font-size:8px;margin-bottom:2px}
 }
+
+/* Judgment colors and a compact early/late backdrop, only for GREAT. */
+.judgment .judge-word.great{color:var(--lime)}
+.judgment small.timing{color:#fff;width:fit-content;max-width:100%;margin:10px auto 0;padding:5px 9px;border-radius:4px;line-height:1.25}
+.judgment .timing.early{background:rgba(37,99,190,.88)}
+.judgment .timing.late{background:rgba(185,46,62,.88)}
