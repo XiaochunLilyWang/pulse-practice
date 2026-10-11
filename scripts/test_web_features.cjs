@@ -7,7 +7,7 @@ const context=await browser.newContext({viewport:{width:390,height:844},hasTouch
 await context.addInitScript(()=>{window.testTime=10000;performance.now=()=>window.testTime;const raf=requestAnimationFrame;requestAnimationFrame=cb=>cb.name==='frame'?0:raf(cb);window.vibrations=[];navigator.vibrate=n=>{window.vibrations.push(n);return true}});
 const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
 await page.goto(process.env.PULSE_URL||'http://127.0.0.1:4173/');
-assert.equal(await page.locator('#patterns button').count(),5);
+assert.equal(await page.locator('#patterns button').count(),6);
 await page.locator('#patterns [data-value="stairs"]').click();
 await page.locator('#stairsDirections [data-value="left"]').click();
 await page.reload();
@@ -23,7 +23,8 @@ await page.waitForURL('**/play.html?layout=mobile-landscape');
 assert.equal(await page.locator('#rotationGate').isVisible(),true);
 await page.evaluate(()=>start());assert.equal(await page.evaluate(()=>mode),'ready');
 await page.setViewportSize({width:844,height:390});await page.waitForFunction(()=>document.querySelector('#rotationGate').hidden);
-const ratio=await page.locator('#game').evaluate(el=>el.clientWidth/el.clientHeight);assert.ok(Math.abs(ratio-16/9)<.02);
+const ratio=await page.locator('#playStage').evaluate(el=>el.clientWidth/el.clientHeight);assert.ok(Math.abs(ratio-16/9)<.02);
+const stageBounds=await page.locator('#playStage').boundingBox(),judgeBounds=await page.locator('#judgment').boundingBox();assert.ok(judgeBounds.x>=stageBounds.x+stageBounds.width-1);
 await page.locator('#begin').click();
 // Two real touch contacts at the same timestamp, on opposite lanes and different heights.
 await page.evaluate(()=>{testTime=run.start;frame()});
