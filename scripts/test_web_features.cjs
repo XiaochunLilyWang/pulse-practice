@@ -19,7 +19,7 @@ const charts=await page.evaluate(()=>[1,2,3,4,'custom'].map(sub=>{config.sub=sub
 for(const chart of charts){assert.equal(chart.notes.length,chart.count*4);for(let i=0;i<chart.notes.length;i+=2){assert.equal(chart.notes[i].time,chart.notes[i+1].time);assert.notEqual(chart.notes[i].lane,chart.notes[i+1].lane)}}
 await page.evaluate(()=>{config.sub=4;config.bars=1;update()});
 await page.locator('#start').click();await page.locator('[data-layout="mobile-landscape"]').click();
-await page.waitForURL('**/play.html?layout=mobile-landscape');
+await page.waitForURL(url=>url.pathname.endsWith('/play.html')&&url.searchParams.get('layout')==='mobile-landscape');
 assert.equal(await page.locator('#rotationGate').isVisible(),true);
 await page.evaluate(()=>start());assert.equal(await page.evaluate(()=>mode),'ready');
 await page.setViewportSize({width:844,height:390});await page.waitForFunction(()=>document.querySelector('#rotationGate').hidden);

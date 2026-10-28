@@ -160,6 +160,7 @@ node scripts/test_xhs_features.cjs
 node scripts/test_history.cjs
 node scripts/test_celebration.cjs
 node scripts/test_web_audio.cjs
+node scripts/test_config_transfer.cjs
 ```
 
 浏览器测试需要 Playwright 和运行中的本地服务器：
