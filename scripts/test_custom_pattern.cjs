@@ -23,7 +23,7 @@ const expected=await page.evaluate(()=>{config.bars=2;update();return makeNotes(
 assert.deepEqual(expected.map(n=>n.lane),[0,1,0,3,0,1,0,3]);assert.deepEqual(expected.map(n=>n.time),[0,.5,1,1.5,2,2.5,3,3.5]);
 await page.locator('#patternEditor').scrollIntoViewIfNeeded();if(process.env.PULSE_SCREENSHOT)await page.screenshot({path:process.env.PULSE_SCREENSHOT});
 assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
-await page.locator('#start').click();await page.locator('[data-layout="portrait"]').click();await page.waitForURL('**/play.html?layout=portrait');
+await page.locator('#start').click();await page.locator('[data-layout="portrait"]').click();await page.waitForURL(url=>url.pathname.endsWith('/play.html')&&url.searchParams.get('layout')==='portrait');
 await page.locator('#begin').click();assert.deepEqual(await page.evaluate(()=>run.notes),expected);
 await page.evaluate(()=>{for(const n of run.notes){testTime=run.start+n.time*1000;hit(n.lane)}finish()});assert.equal(await page.locator('.achievement-badge.ap').count(),1);assert.ok((await page.locator('.history-list').innerText()).includes('自定义键型'));
 await page.locator('#back').click();await page.waitForURL('**/index.html');assert.equal(await page.evaluate(()=>config.customLanes[12]),1);
